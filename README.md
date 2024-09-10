@@ -1,5 +1,7 @@
 # Debugging a Shopping Cart Application
 
+<img src="bug.webp" alt="bug" width="350" />
+
 ## Objective
 
 In this exercise, you will:
