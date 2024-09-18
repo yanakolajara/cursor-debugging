@@ -17,8 +17,6 @@ This is a simple React shopping cart application where users can add products to
 ## Tech Stack
 
 - React
-- JavaScript
-- HTML
 - CSS
 
 ## Features
