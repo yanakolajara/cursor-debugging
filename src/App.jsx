@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect } from 'react';
 
 // Product component
 function Product({ item, addToCart }) {
@@ -18,28 +18,30 @@ function ShoppingCart({ cartItems }) {
     .toFixed(2);
 
   return (
-    <div className="shopping-cart">
+    <div className='shopping-cart'>
       <h2>Shopping Cart</h2>
       {cartItems.length === 0 ? (
-        <p className="empty-cart-message">Your cart is empty</p>
+        <p className='empty-cart-message'>Your cart is empty</p>
       ) : (
         <>
           <ul>
             {cartItems.map((item) => (
               <li key={item.id}>
-                <span className="item-name">{item.name}</span>
-                <span className="item-details">
+                <span className='item-name'>{item.name}</span>
+                <span className='item-details'>
                   {item.quantity} x ${item.price.toFixed(2)}
                 </span>
               </li>
             ))}
           </ul>
-          <div className="cart-summary">
+          <div className='cart-summary'>
             <p>
               <span>Total Items:</span>
-              <span>{cartItems.length}</span>
+              <span>
+                {cartItems.reduce((total, item) => total + item.quantity, 0)}
+              </span>
             </p>
-            <p className="total-price">
+            <p className='total-price'>
               <span>Total Price:</span>
               <span>${total}</span>
             </p>
@@ -52,38 +54,38 @@ function ShoppingCart({ cartItems }) {
 
 // New Product Form component
 function NewProductForm({ addProduct }) {
-  const [newProduct, setNewProduct] = useState({ name: "", price: "" });
+  const [newProduct, setNewProduct] = useState({ name: '', price: '' });
 
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!newProduct.name || newProduct.price <= 0 || isNaN(newProduct.price)) {
-      alert("Please enter a valid name and price.");
+      alert('Please enter a valid name and price.');
       return;
     }
     addProduct(newProduct);
-    setNewProduct({ name: "", price: "" });
+    setNewProduct({ name: '', price: '' });
   };
 
   return (
     <form onSubmit={handleSubmit}>
       <input
-        type="text"
-        placeholder="Name"
+        type='text'
+        placeholder='Name'
         value={newProduct.name}
         onChange={(e) => setNewProduct({ ...newProduct, name: e.target.value })}
       />
       <input
-        type="number"
-        placeholder="Price"
+        type='number'
+        placeholder='Price'
         value={newProduct.price}
         required
-        min="0.01"
-        step="0.01"
+        min='0.01'
+        step='0.01'
         onChange={(e) =>
-          setNewProduct({ ...newProduct, price: e.target.value })
+          setNewProduct({ ...newProduct, price: Number(e.target.value) })
         }
       />
-      <button type="submit">Add Product</button>
+      <button type='submit'>Add Product</button>
     </form>
   );
 }
@@ -91,9 +93,9 @@ function NewProductForm({ addProduct }) {
 // Main App component
 function App() {
   const [products, setProducts] = useState([
-    { id: 1, name: "Apple", price: 1 },
-    { id: 2, name: "Banana", price: 0.5 },
-    { id: 3, name: "Cherry", price: 2 },
+    { id: 1, name: 'Apple', price: 1 },
+    { id: 2, name: 'Banana', price: 0.5 },
+    { id: 3, name: 'Cherry', price: 2 },
   ]);
   const [cart, setCart] = useState([]);
 
@@ -113,20 +115,23 @@ function App() {
   };
 
   useEffect(() => {
-    console.log("Cart updated");
+    console.log('Cart updated');
     // Error 6: Incorrect dependency array
-  }, [cart, undefinedVariable]);
+  }, [
+    cart,
+    // undefinedVariable
+  ]);
 
   return (
-    <div className="container">
+    <div className='container'>
       <h1>React Shopping Cart</h1>
 
       <NewProductForm addProduct={addProduct} />
 
-      <div className="product-list">
+      <div className='product-list'>
         {products.map((product) => (
-          <div className="product-card" key={product.id}>
-            <Product item={product.name} addToCart={addToCart} />
+          <div className='product-card' key={product.id}>
+            <Product item={product} addToCart={addToCart} />
           </div>
         ))}
       </div>
@@ -134,10 +139,6 @@ function App() {
       <ShoppingCart cartItems={cart} />
     </div>
   );
-
-  console.log(undefinedVariable);
 }
-
-const [state, setState] = useState();
 
 export default App;
